@@ -1,0 +1,51 @@
+Topics
+Here are some of the topics that you’ll be using to complete this project:
+
+Loops to continue asking for user input to determine which functionality to use
+Lists and Dictionaries to store the available functionalities and state of the program
+Functions to process user input and generate instruction menus
+Nested for-loop to access pixels of images to perform the modifications
+Using modules either defined for you or by you
+Utilize the event-loop of Pygame to accept user input
+Components
+There are two main components that you have to complete in this project.
+
+Component 1: User Interface (10 out of 50 points)
+The User Interface controls how information is being presented to the user, and how the program receives and processes user input. It uses some of the functions provided in the cmpt120imageProject module. The most notable ones are:
+
+getImage – loads an image from the computer into the program as a 2D R/G/B array
+saveImage – saves an image represented as a 2D R/G/B array to the computer
+showInterface – displays the image represented as a 2D R/G/B array to a window (user interface), together with the caption and the instruction text
+At any point in time the user interface shows all possible options the user can choose from. There are two parts in the options:
+
+The “system” options – these options include Quit, Open Image, Save Current Image, and Reload Original Image. They are always available to the user and are selected by the characters Q/O/S/R.
+The “manipulation” options – these options vary depending on which mode the user is at: Basic, Intermediate, and Advanced. See below for which options are available to the user. They are selected by numbers.
+Component 2: Image Manipulation Module (40 out of 50 points)
+The Image Manipulation Module contains all the functions that perform a certain image manipulation functionality to an image represented by a 2D R/G/B array (details of each function are provided below). All functions return a newly created image represented by a 2D R/G/B array. Points will be allocated to successful implementation according to level of difficulty.
+
+Implementation Details
+For information about what each options are and ways to implement them, please refer to the Detailed Instruction Document, which will be available shortly.
+
+A demo video will also be available shortly.
+
+Provided Files
+Use these files to help you get started with the project.
+
+main.py [available soon]
+cmpt120imageProj.py
+cmpt120imgManip.py [available soon]
+project-photo.jpg
+Submission
+Submit a .zip file called cmpt120YAIP.zip containing your main.py, cmpt120imageProj.py, cmpt120imageManip.py, and project-photo.jpg. We will be marking your main.py and cmpt120imageMainip.py. The rest are just to help us to run your program and we might replace them with our copies.
+
+Notes
+You must only import the pygame, numpy, and tkinter packages, and the provided cmpt120imageProj.py module. All other functions you use can only either be built-in or defined by you.
+The pygame package has a module called transform that can do some of the manipulations in this project. You are welcome to explore those functions, but you are not allowed to use them. You must implement it by yourself using nested for-loops as taught in the class.
+The changes are accumulative, that is, the operations will persist as you apply multiple functionalities, until the user selects “revertToOriginalImage”. For example, applying invert and then flip horizontal will produce an inverted image that is flipped around the vertical middle axis.
+For this project you will be using a few libraries which are not natively available in IDLE. You can choose to use Repl.it (https://repl.it/ (Links to an external site.)) to do this exercise, or use another Python code editor called Mu (https://codewith.mu/ (Links to an external site.)). Both have the libraries built-in and are ready for use.
+You must put all your function definitions for the manipulation options in another Python module file named cmpt120imageManip.py. Each function takes in one parameter (a 2D R/G/B array containing all the pixels). Refer to our lectures for details. This file should begin with the line import numpy.
+You must put your code for the interactive program (asking for user input) in a Python file named main.py. This file is what we called a “driver file” that calls functions from other modules including getImage, showImage, invert, …etc.
+Please avoid using import replit in your code as this makes it difficult for TAs to mark it on their PCs.
+Code that does not run will receive a significant penalty. Make sure your submitted code runs!
+Readability Guidelines
+Please check that your code follows the guidelines here: https://canvas.sfu.ca/courses/56176/pages/readability-guidelines
