@@ -1,8 +1,9 @@
 # Create some helper functions to wrap the
 # Pygame image functions
 
-import pygame
 import numpy
+import pygame
+import tkinter
 
 def getImage(filename):
   """

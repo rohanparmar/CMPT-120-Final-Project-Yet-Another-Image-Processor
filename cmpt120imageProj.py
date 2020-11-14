@@ -23,6 +23,7 @@ They are selected by numbers.
 import cmpt120imageManip
 
 
+# system options: Quit, Open Save Current Image, Reload
 def sys_Quit(loopVar):
     loopVar = False
     return loopVar
