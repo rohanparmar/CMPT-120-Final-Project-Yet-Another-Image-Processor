@@ -1,39 +1,88 @@
-'''
+# CMPT 120 Yet Another Image Processer
+# Starter code for cmpt120imageProj.py
+# ***do not modify this file***
 
-The User Interface controls how information is being presented to the user,
-and how the program receives and processes user input.
-It uses some of the functions provided in the cmpt120imageProject module.
-The most notable ones are:
+import pygame
+import numpy
 
-getImage – loads an image from the computer into the program as a 2D R/G/B array
-saveImage – saves an image represented as a 2D R/G/B array to the computer
-showInterface – displays the image represented as a 2D R/G/B array to a window (user interface),
-together with the caption and the instruction text
-At any point in time the user interface shows all possible options the user can choose from.
-There are two parts in the options:
+def getImage(filename):
+  """
+  Input: filename - string containing image filename to open
+  Returns: 2d array of RGB values
+  """
+  image = pygame.image.load(filename)
+  return pygame.surfarray.array3d(image).tolist()
 
-The “system” options – these options include Quit, Open Image, Save Current Image, and Reload
-Original Image. They are always available to the user and are selected by the characters Q/O/S/R.
+def saveImage(pixels, filename):
+  """
+  Input:  pixels - 2d array of RGB values
+          filename - string containing filename to save image
+  Output: Saves a file containing pixels
+  """
+  nparray = numpy.asarray(pixels)
+  surf = pygame.surfarray.make_surface(nparray)
+  (width, height, colours) = nparray.shape
+  surf = pygame.display.set_mode((width, height))
+  pygame.surfarray.blit_array(surf, nparray)
+  pygame.image.save(surf, filename)
 
-The “manipulation” options – these options vary depending on which mode the user is at:
-Basic, Intermediate, and Advanced. See below for which options are available to the user.
-They are selected by numbers.
+def showImage(pixels, title):
+    """
+    Input:  pixels - 2d array of RGB values
+            title - title of the window
+    Output: show the image in a window
+    """
+    nparray = numpy.asarray(pixels)
+    surf = pygame.surfarray.make_surface(nparray)
+    (width, height, colours) = nparray.shape
+    pygame.display.init()
+    pygame.display.set_caption(title)
+    screen = pygame.display.set_mode((width, height))
+    screen.fill((225, 225, 225))
+    screen.blit(surf, (0, 0))
+    pygame.display.update()
 
-'''
-import cmpt120imageManip
+def showInterface(pixels, title, textList):
+    """
+    Input:  pixels - 2d array of RGB values
+            title - title of the window
+            text - list of strings to be displayed at the bottom of the window
+    Output: show the image in a window
+    """
+    nparray = numpy.asarray(pixels)
+    surf = pygame.surfarray.make_surface(nparray)
+    (width, height, colours) = nparray.shape
+    # set up the text to be displayed
+    fontObj = pygame.font.Font("freesansbold.ttf", 16)
+    textObjs = []
+    for line in textList:
+        textObjs += [fontObj.render(line, False, (0, 0, 0), (225, 225, 225))]
+    # find out the largest width within the lines
+    maxLineWidth = textObjs[0].get_width()
+    for lo in textObjs:
+        if maxLineWidth < lo.get_width():
+            maxLineWidth = lo.get_width()
+    # find out the width of the screen
+    width = max(width, maxLineWidth)
+    # set up the display
+    pygame.display.init()
+    pygame.display.set_caption(title + " (" + str(width) + "x" + str(height) + ")")
+    screen = pygame.display.set_mode((width, height + textObjs[0].get_height()*len(textObjs)))
+    screen.fill((225, 225, 225))
+    # add the image to the display
+    screen.blit(surf, (0, 0))
+    # add the texts to the display
+    i = 0
+    for textObj in textObjs:
+        screen.blit(textObj, (0, height + i * textObj.get_height()))
+        i += 1
+    # display everything
+    pygame.display.update()
 
-
-# system options: Quit, Open Save Current Image, Reload
-def sys_Quit(loopVar):
-    loopVar = False
-    return loopVar
-
-def sys_OpenImage(image, title):
-    cmpt120imageManip.showImage(image, title)
-
-def sys_SaveCurrentImage(image, title):
-    cmpt120imageManip.saveImage(image, title)
-
-def sys_ReloadOriginalImage(original, manipulated):
-    manipulated = cmpt120imageManip.getImage(original)
-    return manipulated
+def createBlackImage(width, height):
+    """
+    Input:  width - width of the filled image in pixels
+            height - height of the filled image in pixels
+    Output: 2d array of RGB values all set to zero
+    """
+    return numpy.zeros((width, height, 3)).tolist()
