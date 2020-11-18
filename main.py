@@ -101,8 +101,8 @@ appStateValues = {
                     "lastUserInput": ""
                  }
 
-currentImg = cmpt120imageProj.createBlackImage(600, 400) # create a default 600 x 400 black image
-cmpt120imageProj.showInterface(currentImg, "No Image", generateMenu(appStateValues)) # note how it is used
+currentImg = cmpt120imageProj.py.createBlackImage(600, 400) # create a default 600 x 400 black image
+cmpt120imageProj.py.showInterface(currentImg, "No Image", generateMenu(appStateValues)) # note how it is used
 
 # ***this is the event-loop of the application. Keep the remainder of the code unmodified***
 keepRunning = True
