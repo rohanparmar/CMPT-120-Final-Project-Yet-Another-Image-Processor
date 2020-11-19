@@ -69,6 +69,15 @@ while(ans != 0):
     elif ans == 12:
         new_img = res.pixelate(img)
         lib.showImage(new_img, "Pixelated")
+    elif ans == 13:
+        new_img = res.rotateLeft(img)
+        lib.showImage(new_img, "Rotated Left")
+    elif ans == 14:
+        new_img = res.rotateRight(img)
+        lib.showImage(new_img, "Rotated Right")
+    elif ans == 15:
+        new_img = res.binarize(img)
+        lib.showImage(new_img, "Binarized")
     else:
         print("Sorry, your input is invalid.")
 

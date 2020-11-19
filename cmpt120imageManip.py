@@ -104,12 +104,13 @@ def increaseBrightness(image):
 
 # Advanced Functions
 def rotateLeft(image):
-    #code
-    new_image = image
+    rotatedImage = list(zip(*image))
+    return(rotatedImage)
 
 def rotateRight(image):
-    #code
-    a = "test"
+    rotatedImage = zip(*image[::-1])
+    rotatedImage = [list(element) for element in rotatedImage]
+    return(rotatedImage)
 
 def pixelate(image):
     redTotal = 0
@@ -135,6 +136,70 @@ def pixelate(image):
 
     return (image)
 
+def thresholdCalculator(image):
+
+    height = len(image[0])
+    width = len(image)
+
+    totalRed = 0
+
+    image = convToGrayscale(image)
+
+    for pixelRow in image:
+        for pixel in pixelRow:
+            totalRed += pixel[0]
+
+    redThreshold = int(totalRed / (height * width))
+
+    backgroundThresholdTotal = 0
+    foregroundThresholdTotal = 0
+    backgroundCounter = 0
+    foregroundCounter = 0
+    newThreshold = 0
+
+    test = 1
+
+    while(test == 1):
+        for pixelRow in image:
+            for pixel in pixelRow:
+                if pixel[0] > redThreshold:
+                    backgroundThresholdTotal += pixel[0]
+                    backgroundCounter += 1
+                else:
+                    foregroundThresholdTotal += pixel[0]
+                    foregroundCounter += 1
+
+        backgroundThreshold = int(backgroundThresholdTotal / backgroundCounter)
+        foregroundThreshold = int(foregroundThresholdTotal / foregroundCounter)
+
+        newThreshold = int((backgroundThreshold + foregroundThreshold) / 2)
+
+        if(newThreshold - redThreshold < 10):
+            test = 0
+
+        backgroundThresholdTotal = 0
+        foregroundThresholdTotal = 0
+        backgroundCounter = 0
+        foregroundCounter = 0
+
+    return (newThreshold)
+
+
 def binarize(image):
-    #code
-    a = "test"
+    threshold = thresholdCalculator(image)
+    image = cmpt120imageProj.getImage("week9-photo.jpg")
+    newImage = convToGrayscale(image)
+    for pixelRow in newImage:
+        for pixel in pixelRow:
+            if pixel[0] > threshold:
+                for i in range(3):
+                    pixel[i] = 255
+            else:
+                for i in range(3):
+                    pixel[i] = 0
+    return(newImage)
+
+
+
+
+

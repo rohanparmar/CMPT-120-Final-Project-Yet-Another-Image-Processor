@@ -17,20 +17,34 @@ system = [
 
 # list of basic operation options
 basic = [
-          "1: Switch to Intermeidate Functions",
-          "2: Switch to Advanced Functions"
-         ]
+    "1: Invert",
+    "2: Flip Horizontal",
+    "3: Flip Vertical",
+    "4: Switch to Intermediate Functions",
+    "5: Switch to Advanced Functions",
+]
 
 # list of intermediate operation options
 intermediate = [
-                  "1: Switch to Basic Functions",
-                  "2: Switch to Advanced Functions"
+    "1: Remove Red Channel",
+    "2: Remove Green Channel",
+    "3: Remove Blue Channel",
+    "4: Convert to Grayscale",
+    "5: Apply Sepia Filter",
+    "6: Decrease Brightness",
+    "7: Increase Brightness",
+    "8: Switch to Basic Functions",
+    "9: Switch to Advanced Functions"
                  ]
 
 # list of advanced operation options
 advanced = [
-                "1: Switch to Basic Functions",
-                "2: Switch to Intermediate Functions"
+    "1: Rotate Left",
+    "2: Rotate Right",
+    "3: Pixelate",
+    "4: Binarize",
+    "5: Switch to Basic Functions",
+    "6: Switch to Intermediate Functions",
              ]
 
 # a helper function that generates a list of strings to be displayed in the interface
