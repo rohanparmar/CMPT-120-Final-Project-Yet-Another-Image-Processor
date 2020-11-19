@@ -12,6 +12,9 @@ import cmpt120imageManip as res
 
 img = lib.getImage("week9-photo.jpg")
 
+print(len(img))
+print(len(img[0]))
+
 #input_message = "Press 0 to Exit\nPress 1 to show the original image\nPress 2 to Invert the colours\nPress 3 to Cover bottom Half in black\nPress 4 to flip image horizontally\n"
 
 input_message = "0: exit\n1: Show orig\n2: Invert\n5: RR\n6: RB\n7: RG\n8: CTG\n9:AS\n10:DB\n11:IB\n"
@@ -63,6 +66,9 @@ while(ans != 0):
     elif ans == 11:
         new_img = res.increaseBrightness(img)
         lib.showImage(new_img, "Increased Brightness")
+    elif ans == 12:
+        new_img = res.pixelate(img)
+        lib.showImage(new_img, "Pixelated")
     else:
         print("Sorry, your input is invalid.")
 

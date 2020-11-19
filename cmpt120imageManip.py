@@ -21,11 +21,11 @@ def invertImage(image):
 def flipVertical(image):
     height = len(image[0])
     width = len(image)
-    for y in range(height):
-        for x in range(width//2):
-            temp = image[x][y+1]
-            image[x][y+1] = image[width][height - y - 1]
-            image[x][height - y - 1] = temp
+    for x in range(width):
+        for y in range(height//2):
+            temp = image[x][y]
+            image[x][y] = image[x][height-y-1]
+            image[x][height-y-1] = temp
     return (image)
 
 
@@ -34,8 +34,8 @@ def flipHorizontal(image):
     width = len(image)
     for y in range(height):
         for x in range(width // 2):
-            temp = image[x + 1][y]
-            image[x + 1][y] = image[width - x - 1][y]
+            temp = image[x][y]
+            image[x][y] = image[width - x - 1][y]
             image[width - x - 1][y] = temp
     return (image)
 
@@ -105,15 +105,35 @@ def increaseBrightness(image):
 # Advanced Functions
 def rotateLeft(image):
     #code
-    a = "test"
+    new_image = image
 
 def rotateRight(image):
     #code
     a = "test"
 
 def pixelate(image):
-    #code
-    a = "test"
+    redTotal = 0
+    greenTotal = 0
+    blueTotal = 0
+    height = len(image[0]) - len(image[0])%4
+    width = len(image) - len(image)%4
+    for y in range(0, height, 4):
+        for x in range(0, width, 4):
+            for i in range(4):
+                for j in range(4):
+                    redTotal += image[x+i][y+j][0]
+                    greenTotal += image[x+i][y+j][1]
+                    blueTotal += image[x+i][y+j][2]
+            for i in range(4):
+                for j in range(4):
+                    image[x+i][y+j][0] = int(redTotal/16)
+                    image[x+i][y+j][1] = int(greenTotal/16)
+                    image[x+i][y+j][2] = int(blueTotal/16)
+            redTotal = 0
+            greenTotal = 0
+            blueTotal = 0
+
+    return (image)
 
 def binarize(image):
     #code
