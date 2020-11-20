@@ -104,8 +104,12 @@ def increaseBrightness(image):
 
 # Advanced Functions
 def rotateLeft(image):
-    rotatedImage = list(zip(*image))
-    return(rotatedImage)
+    height = len(image[0])
+    width = len(image)
+
+#    for x in range(width, 0, -1):
+#        for y in range
+#    return(rotatedImage)
 
 def rotateRight(image):
     rotatedImage = zip(*image[::-1])
@@ -185,11 +189,11 @@ def thresholdCalculator(image):
     return (newThreshold)
 
 
-def binarize(image):
-    threshold = thresholdCalculator(image)
-    image = cmpt120imageProj.getImage("week9-photo.jpg")
-    newImage = convToGrayscale(image)
-    for pixelRow in newImage:
+def binarize(image, threshold):
+#    threshold = thresholdCalculator(image)
+#    image = cmpt120imageProj.getImage("week9-photo.jpg")
+    convToGrayscale(image)
+    for pixelRow in image:
         for pixel in pixelRow:
             if pixel[0] > threshold:
                 for i in range(3):
@@ -197,7 +201,7 @@ def binarize(image):
             else:
                 for i in range(3):
                     pixel[i] = 0
-    return(newImage)
+    return(image)
 
 
 

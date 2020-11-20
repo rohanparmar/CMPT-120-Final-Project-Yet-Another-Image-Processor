@@ -1,8 +1,8 @@
 # CMPT 120 Yet Another Image Processer
 # Starter code for main.py
-# Author(s):
-# Date:
-# Description:
+# Author(s): Rohan Parmar and Andrey Ponomarev
+# Date: 11/20/20
+# Description: Chicken Nuggets
 
 import cmpt120imageProj
 import cmpt120imageManip
@@ -12,7 +12,10 @@ pygame.init()
 
 # list of system options
 system = [
-            "Q: Quit",
+    "Q: Quit",
+    "O: Open",
+    "S: Save Image",
+    "R: Reload Image"
          ]
 
 # list of basic operation options
@@ -21,7 +24,7 @@ basic = [
     "2: Flip Horizontal",
     "3: Flip Vertical",
     "4: Switch to Intermediate Functions",
-    "5: Switch to Advanced Functions",
+    "5: Switch to Advanced Functions"
 ]
 
 # list of intermediate operation options
@@ -35,7 +38,7 @@ intermediate = [
     "7: Increase Brightness",
     "8: Switch to Basic Functions",
     "9: Switch to Advanced Functions"
-                 ]
+]
 
 # list of advanced operation options
 advanced = [
@@ -44,9 +47,8 @@ advanced = [
     "3: Pixelate",
     "4: Binarize",
     "5: Switch to Basic Functions",
-    "6: Switch to Intermediate Functions",
-             ]
-
+    "6: Switch to Intermediate Functions"
+]
 # a helper function that generates a list of strings to be displayed in the interface
 def generateMenu(state):
     """
@@ -58,24 +60,28 @@ def generateMenu(state):
     menuString.append("Choose the following options:")
     menuString.append("") # an empty line
     menuString += system
+    updateMenu = menuString
     menuString.append("") # an empty line
 
     # build the list differently depending on the mode attribute
     if state["mode"] == "basic":
-        menuString.append("--Basic Mode--")
+#        print("--Basic Mode--")
+        menuString = updateMenu
         menuString += basic
         menuString.append("")
-        menuString.append("***Update this line to show the proper information***")
+#        menuString.append("***Update this line to show the proper information***")
     elif state["mode"] == "intermediate":
-        menuString.append("--Intermediate Mode--")
+#        print("--Intermediate Mode--")
+        menuString = updateMenu
         menuString += intermediate
         menuString.append("")
-        menuString.append("***Update this line to show the proper information***")
+#        menuString.append("***Update this line to show the proper information***")
     elif state["mode"] == "advanced":
-        menuString.append("--Advanced Mode--")
+#        menuString = ("--Advanced Mode--")
+        menuString = updateMenu
         menuString += advanced
         menuString.append("")
-        menuString.append("***Update this line to show the proper information***")
+#        menuString.append("***Update this line to show the proper information***")
     else:
         menuString.append("Error: Unknown mode!")
 
@@ -89,18 +95,150 @@ def handleUserInput(state, img):
                 img - the 2d array of RGB values to be operated on
         Returns: the 2d array of RGB vales of the result image of an operation chosen by the user
     """
+#    openFilename = "test"
     userInput = state["lastUserInput"].upper()
     # handle the system functionalities
     if userInput.isalpha(): # check if the input is an alphabet
+
         print("Log: Doing system functionalities " + userInput)
+
         if userInput == "Q": # this case actually won't happen, it's here as an example
             print("Log: Quitting...")
+
+        if userInput == "O":
+            tkinter.Tk().withdraw()
+            openFilename = tkinter.filedialog.askopenfilename()
+            img = cmpt120imageProj.getImage(openFilename)
+            appStateValues["lastOpenFilename"] = openFilename
+            cmpt120imageProj.showInterface(img, "Original Image", generateMenu(appStateValues))
+
+        if userInput == "S":
+            tkinter.Tk().withdraw()
+            saveFilename = tkinter.filedialog.asksaveasfilename()
+            cmpt120imageProj.saveImage(img, saveFilename)
+            cmpt120imageProj.showInterface(img, "Final Image", generateMenu(appStateValues))
+
+        if userInput == "R":
+            tkinter.Tk().withdraw()
+            openFilename = appStateValues["lastOpenFilename"]
+            img = cmpt120imageProj.getImage(openFilename)
+            cmpt120imageProj.showInterface(img, "Original Image", generateMenu(appStateValues))
+
         # ***add the rest to handle other system functionalities***
 
     # or handle the manipulation functionalities based on which mode the application is in
     elif userInput.isdigit(): # has to be a digit for manipulation options
         print("Log: Doing manipulation functionalities " + userInput)
         # ***add the rest to handle other manipulation functionalities***
+        if appStateValues["mode"] == "basic":
+            if userInput == "1":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.invertImage(img)
+                cmpt120imageProj.showInterface(img, "Inverted Image", generateMenu(appStateValues))
+
+            if userInput == "2":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.flipVertical(img)
+                cmpt120imageProj.showInterface(img, "Vertically Flipped Image", generateMenu(appStateValues))
+
+            if userInput == "3":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.flipHorizontal(img)
+                cmpt120imageProj.showInterface(img, "Horizontally Flipped Image", generateMenu(appStateValues))
+
+            if userInput == "4":
+                tkinter.Tk().withdraw()
+                appStateValues["mode"] = "intermediate"
+                cmpt120imageProj.showInterface(img, "Intermediate Menu", generateMenu(appStateValues))
+
+            if userInput == "5":
+                tkinter.Tk().withdraw()
+                appStateValues["mode"] = "advanced"
+                cmpt120imageProj.showInterface(img, "Advanced Menu", generateMenu(appStateValues))
+
+        elif appStateValues["mode"] == "intermediate":
+            if userInput == "1":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.removeRed(img)
+                cmpt120imageProj.showInterface(img, "Red Channel Removed", generateMenu(appStateValues))
+
+            if userInput == "2":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.removeGreen(img)
+                cmpt120imageProj.showInterface(img, "Green Channel Removed", generateMenu(appStateValues))
+
+            if userInput == "3":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.removeBlue(img)
+                cmpt120imageProj.showInterface(img, "Blue Channel Removed", generateMenu(appStateValues))
+
+            if userInput == "4":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.convToGrayscale(img)
+                cmpt120imageProj.showInterface(img, "Grayscale", generateMenu(appStateValues))
+
+            if userInput == "5":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.applySepia(img)
+                cmpt120imageProj.showInterface(img, "Sepia Filter", generateMenu(appStateValues))
+
+            if userInput == "6":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.decreaseBrightness(img)
+                cmpt120imageProj.showInterface(img, "Brightness Decreased", generateMenu(appStateValues))
+
+            if userInput == "7":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.increaseBrightness(img)
+                cmpt120imageProj.showInterface(img, "Brightness Increased", generateMenu(appStateValues))
+
+            if userInput == "8":
+                tkinter.Tk().withdraw()
+                appStateValues["mode"] = "basic"
+                cmpt120imageProj.showInterface(img, "Basic Menu", generateMenu(appStateValues))
+
+            if userInput == "9":
+                tkinter.Tk().withdraw()
+                appStateValues["mode"] = "advanced"
+                cmpt120imageProj.showInterface(img, "Advanced Menu", generateMenu(appStateValues))
+
+        else: #appStateValues["mode"] == "advanced":
+            if userInput == "1":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.rotateLeft(img)
+                cmpt120imageProj.showInterface(img, "Rotate Left", generateMenu(appStateValues))
+
+            if userInput == "1":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.rotateLeft(img)
+                cmpt120imageProj.showInterface(img, "Rotate Left", generateMenu(appStateValues))
+
+            if userInput == "2":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.rotateRight(img)
+                cmpt120imageProj.showInterface(img, "Rotate Right", generateMenu(appStateValues))
+
+            if userInput == "3":
+                tkinter.Tk().withdraw()
+                cmpt120imageManip.pixelate(img)
+                cmpt120imageProj.showInterface(img, "Pixelated Image", generateMenu(appStateValues))
+
+            if userInput == "4":
+                tkinter.Tk().withdraw()
+                threshold = cmpt120imageManip.thresholdCalculator(img)
+                cmpt120imageManip.binarize(img, threshold)
+                cmpt120imageProj.showInterface(img, "Binarized Image", generateMenu(appStateValues))
+
+            if userInput == "5":
+                tkinter.Tk().withdraw()
+                appStateValues["mode"] = "basic"
+                cmpt120imageProj.showInterface(img, "Basic Menu", generateMenu(appStateValues))
+
+            if userInput == "6":
+                tkinter.Tk().withdraw()
+                appStateValues["mode"] = "intermediate"
+                cmpt120imageProj.showInterface(img, "Intermediate Menu", generateMenu(appStateValues))
+
 
     else: # unrecognized user input
             print("Log: Unrecognized user input: " + userInput)
@@ -115,8 +253,8 @@ appStateValues = {
                     "lastUserInput": ""
                  }
 
-currentImg = cmpt120imageProj.py.createBlackImage(600, 400) # create a default 600 x 400 black image
-cmpt120imageProj.py.showInterface(currentImg, "No Image", generateMenu(appStateValues)) # note how it is used
+currentImg = cmpt120imageProj.createBlackImage(600, 400) # create a default 600 x 400 black image
+cmpt120imageProj.showInterface(currentImg, "No Image", generateMenu(appStateValues)) # note how it is used
 
 # ***this is the event-loop of the application. Keep the remainder of the code unmodified***
 keepRunning = True
@@ -139,19 +277,3 @@ while keepRunning:
 pygame.quit()
 
 print("Log: Program Quit")
-
-
-#msg = """Choose the following options:
-#\n\nQ: Quit
-#\nO: Open Image
-#\nS: Save Current Image
-#\nR: Reload Original Image
-#\n\n --Basic Mode--
-#\n1. Invert
-#\n2. Flip Horizontal
-#\n3. Flip Vertical
-#\n4. Switch to Intermediate Functions
-#\n5. Switch to Advanced Functions
-#\n\nEnter your choice (Q/O/S/R or 1-5):\n"""
-
-print(msg)
