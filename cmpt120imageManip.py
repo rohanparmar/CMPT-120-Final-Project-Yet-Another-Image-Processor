@@ -112,9 +112,9 @@ def rotateLeft(image):
 #    return(rotatedImage)
 
 def rotateRight(image):
-    rotatedImage = zip(*image[::-1])
-    rotatedImage = [list(element) for element in rotatedImage]
-    return(rotatedImage)
+    new_image = zip(image[::-1])
+    return(new_image)
+
 
 def pixelate(image):
     redTotal = 0
