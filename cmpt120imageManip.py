@@ -1,14 +1,16 @@
 # CMPT 120 Yet Another Image Processer
 # Starter code for cmpt120imageManip.py
-# Author(s):
-# Date:
-# Description:
-
-import cmpt120imageProj
-import numpy
+# Author(s): Rohan Parmar and Andrey Ponomarev
+# Date: 19th November, 2020
+# Description: File where all the image manipulation/handling takes place
+# Copyleft, all wrongs reserved
 
 # Basic Functions:
 
+# Scan Row in image
+# Scan Pixel in image
+# Set RGB values in image as the opposite of themselves
+# IE: R = 255-R
 def invertImage(image):
     # code
     for pixelRow in image:
@@ -17,6 +19,19 @@ def invertImage(image):
             pixel[1] = 255 - pixel[1]
             pixel[2] = 255 - pixel[2]
     return image
+
+
+# Scan image to half the height (so as to not copy the manipulations back lmao)
+# Get Height, Width, and then replace scanned pixel with opposite end pixel
+# For example:
+#    a b c               a b c
+#   #######             #######
+# a #1 2 3#           a #3 2 1#
+# b #4 5 6#      =    b #6 5 4#
+# c #7 8 9#           c #9 8 7#
+#   #######             #######
+#
+#   Note how Column B remains the same
 
 def flipVertical(image):
     height = len(image[0])
@@ -28,6 +43,17 @@ def flipVertical(image):
             image[x][height-y-1] = temp
     return (image)
 
+# Scan image to half the height (so as to not copy the manipulations back lmao)
+# Get Height, Width, and then replace scanned pixel with opposite end pixel
+# For example:
+#    a b c               a b c
+#   #######             #######
+# a #1 2 3#           a #7 8 9#
+# b #4 5 6#      =    b #4 5 6#
+# c #7 8 9#           c #1 2 3#
+#   #######             #######
+#
+#   Note how Row B remains the same
 
 def flipHorizontal(image):
     height = len(image[0])
@@ -39,26 +65,42 @@ def flipHorizontal(image):
             image[width - x - 1][y] = temp
     return (image)
 
+
+
 # Intermediate Functions
 
+# Scan row in image
+# Scan pixel in row
+# First element in pixel list is Red, set to 0
 def removeRed(image):
     for pixelRow in image:
         for pixel in pixelRow:
             pixel[0] = 0
     return image
 
+# Scan row in image
+# Scan pixel in row
+# Second element in pixel list is Green, set to 0
 def removeGreen(image):
     for pixelRow in image:
         for pixel in pixelRow:
             pixel[1] = 0
     return image
 
+# Scan row in image
+# Scan pixel in row
+# Third element in pixel list is Blue, set to 0
 def removeBlue(image):
     for pixelRow in image:
         for pixel in pixelRow:
             pixel[2] = 0
     return image
 
+# Scan row in image
+# Scan pixel in row
+# Get average of elements in pixel (R/G/B)
+# Set elements = Average
+# Elements are the RGB values
 def convToGrayscale(image):
     for pixelRow in image:
         for pixel in pixelRow:
@@ -67,6 +109,11 @@ def convToGrayscale(image):
                 pixel[i] = sumAvg
     return image
 
+
+# Scan pixels
+# Apply Sepia Filter values provided in the document
+# Set an upper limit to transformation (max 255)
+# Replace RGB with new values
 def applySepia(image):
     for pixelRow in image:
         for pixel in pixelRow:
@@ -86,6 +133,9 @@ def applySepia(image):
             pixel[2] = SepiaBlue
     return image
 
+
+# Scan pixel
+# If the individual RGB values are greater than / equal to 10, apply a decrement of 10
 def decreaseBrightness(image):
     for pixelRow in image:
         for pixel in pixelRow:
@@ -94,6 +144,8 @@ def decreaseBrightness(image):
                     pixel[i] = pixel[i]-10
     return image
 
+# Scan pixel
+# If the individual RGB values are less than / equal to 245, apply an increment of 10
 def increaseBrightness(image):
     for pixelRow in image:
         for pixel in pixelRow:
@@ -103,16 +155,15 @@ def increaseBrightness(image):
     return image
 
 # Advanced Functions
-def rotateLeft(image):
-    height = len(image[0])
-    width = len(image)
 
-#    for x in range(width, 0, -1):
-#        for y in range
-#    return(rotatedImage)
+
+def rotateLeft(image):
+    new_image = list(zip(*image[::-1]))
+    return(new_image)
+
 
 def rotateRight(image):
-    new_image = zip(image[::-1])
+    new_image = list(reversed(list(zip(*image))))
     return(new_image)
 
 
@@ -190,8 +241,6 @@ def thresholdCalculator(image):
 
 
 def binarize(image, threshold):
-#    threshold = thresholdCalculator(image)
-#    image = cmpt120imageProj.getImage("week9-photo.jpg")
     convToGrayscale(image)
     for pixelRow in image:
         for pixel in pixelRow:

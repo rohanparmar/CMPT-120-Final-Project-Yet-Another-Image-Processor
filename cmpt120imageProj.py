@@ -53,10 +53,10 @@ def showInterface(pixels, title, textList):
     surf = pygame.surfarray.make_surface(nparray)
     (width, height, colours) = nparray.shape
     # set up the text to be displayed
-    fontObj = pygame.font.Font("freesansbold.ttf", 16)
+    fontObj = pygame.font.Font("DIN-Regular.ttf", 20)
     textObjs = []
     for line in textList:
-        textObjs += [fontObj.render(line, False, (0, 0, 0), (225, 225, 225))]
+        textObjs += [fontObj.render(line, False, (255, 255, 255), (0, 0, 0))]
     # find out the largest width within the lines
     maxLineWidth = textObjs[0].get_width()
     for lo in textObjs:
@@ -68,7 +68,7 @@ def showInterface(pixels, title, textList):
     pygame.display.init()
     pygame.display.set_caption(title + " (" + str(width) + "x" + str(height) + ")")
     screen = pygame.display.set_mode((width, height + textObjs[0].get_height()*len(textObjs)))
-    screen.fill((225, 225, 225))
+    screen.fill((0, 0, 0))
     # add the image to the display
     screen.blit(surf, (0, 0))
     # add the texts to the display

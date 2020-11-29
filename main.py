@@ -55,8 +55,9 @@ def generateMenu(state):
     Input:  state - a dictionary containing the state values of the application
     Returns: a list of strings, each element represets a line in the interface
     """
-    menuString = ["Welcome to CMPT 120 Image Processer!"]
-    menuString.append("") # an empty line
+#    menuString = ["Welcome to CMPT 120 Image Processer!"]
+#    menuString.append("") # an empty line
+    menuString = []
     menuString.append("Choose the following options:")
     menuString.append("") # an empty line
     menuString += system
@@ -210,12 +211,12 @@ def handleUserInput(state, img):
 
             if userInput == "1":
                 tkinter.Tk().withdraw()
-                cmpt120imageManip.rotateLeft(img)
+                img = cmpt120imageManip.rotateLeft(img)
                 cmpt120imageProj.showInterface(img, "Rotate Left", generateMenu(appStateValues))
 
             if userInput == "2":
                 tkinter.Tk().withdraw()
-                cmpt120imageManip.rotateRight(img)
+                img = cmpt120imageManip.rotateRight(img)
                 cmpt120imageProj.showInterface(img, "Rotate Right", generateMenu(appStateValues))
 
             if userInput == "3":
@@ -248,13 +249,13 @@ def handleUserInput(state, img):
 # use a dictionary to remember several state values of the application
 appStateValues = {
                     "mode": "basic",
-                    "lastOpenFilename": "",
+                    "lastOpenFilename": "test",
                     "lastSaveFilename": "",
                     "lastUserInput": ""
                  }
-
-currentImg = cmpt120imageProj.createBlackImage(600, 400) # create a default 600 x 400 black image
-cmpt120imageProj.showInterface(currentImg, "No Image", generateMenu(appStateValues)) # note how it is used
+for i in range(1,14):
+    currentImg = cmpt120imageProj.getImage("startscreen/"+str(i)+".jpg") # create a default 600 x 400 black image
+    cmpt120imageProj.showInterface(currentImg, "No Image", generateMenu(appStateValues)) # note how it is used
 
 # ***this is the event-loop of the application. Keep the remainder of the code unmodified***
 keepRunning = True
